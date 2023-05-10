@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import TodoList from "./TodoList";
+import TodoAdd from "./TodoAdd";
 
 const date1 = new Date(2023, 5, 9, 23, 47);
 const date2 = new Date(2023, 5, 10, 0, 47);
@@ -30,8 +31,10 @@ export default class App extends Component {
         this.state = {
             data: initialData
         }
+        
         this.setDone = this.setDone.bind(this);
         this.delete = this.delete.bind(this);
+        this.add = this.add.bind(this);
     }
 
     // Пометить как выполненное
@@ -49,6 +52,12 @@ export default class App extends Component {
         this.setState(state => ({data: newData}));
     }
 
+    // Добавить дел
+    add(deed){
+        this.state.data.push(deed);
+        this.setState((state)=>({}));
+    }
+
     render() {
         return(
             <>
@@ -61,6 +70,7 @@ export default class App extends Component {
                 </nav>
                 <main className="content px-6 mt-6">
                     <TodoList list={this.state.data} setDone={this.setDone} delete={this.delete}/>
+                    <TodoAdd add={this.add}/>
                 </main>
             </>
         )
