@@ -8,6 +8,8 @@ export default class TodoAdd extends Component {
         this.handleDescChange = this.handleDescChange.bind(this);
         this.handleImageChange = this.handleImageChange.bind(this);
         this.handleFormSubmit = this.handleFormSubmit.bind(this);
+        
+        // Создаст новый пустой объект для данных из веб формы
         this.clearFormData();        
     }
     
@@ -19,6 +21,7 @@ export default class TodoAdd extends Component {
         }
     }
 
+    // Заполнение данных формы
     handleTitleChange(event) {
         this.formData.title = event.target.value;
     }
@@ -42,6 +45,7 @@ export default class TodoAdd extends Component {
         }
     }
 
+    // 
     handleFormSubmit(event) {
         event.preventDefault();
         const newDeed = {...this.formData};
