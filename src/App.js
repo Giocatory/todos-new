@@ -20,7 +20,7 @@ const initialData = [
     {
         title: 'Написать первое React приложение',
         desc: 'Список запланированных дел',
-        image: '',
+        image: 'https://sun9-21.userapi.com/impf/c637119/v637119755/bfaa/V77IlwhITx4.jpg?size=320x224&quality=96&sign=1d42e5e7dc6aa28453980cea9d1853ee&c_uniq_tag=lWmwPyaYFWexxDsmz87NOGYH53UArk4m6s6GaonlfRs&type=album',
         done: false,
         createdAt: date2.toLocaleDateString(),
         key: date2.getTime()
