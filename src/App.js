@@ -31,12 +31,21 @@ export default class App extends Component {
         super(props);
         
         this.state = {
-            data: initialData
+            data: initialData,
+            showMenu: false,
         }
         
         this.setDone = this.setDone.bind(this);
         this.delete = this.delete.bind(this);
         this.add = this.add.bind(this);
+
+        this.showMenu = this.showMenu.bind(this);
+    }
+
+    // Показать меню гамбургер
+    showMenu(evt){
+        evt.preventDefault();
+        this.setState( (state) => ({showMenu:!state.showMenu}));
     }
 
     // Пометить как выполненное
@@ -69,8 +78,13 @@ export default class App extends Component {
                         <NavLink to="/" className={ ({isActive}) => 'navbar-item is-uppercase' + (isActive ? 'is-active' : '') }>
                             Todos
                         </NavLink>
+                        <a href="/" className={this.state.showMenu ? 'navbar-burger is-active' : 'navbar-burger'} onClick={this.showMenu}>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </a>
                     </div>
-                    <div className="navbar-menu">
+                    <div className={this.state.showMenu ? 'navbar-menu is-active' : 'navbar-menu'} onClick={this.show}>
                         <div className="navbar-start">
                             <NavLink to="/add" className={ ({isActive}) => 'navbar-item' + (isActive ? 'is-active' : '') }>
                                 Создать дело
