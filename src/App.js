@@ -83,7 +83,7 @@ export default class App extends Component {
         return(
             <HashRouter>
                 <nav className="navbar is-light">
-                    <div className="navbar-brand">
+                    <div className="navbar-brand is-uppercase">
                         <NavLink to="/" className={ ({isActive}) => 'navbar-item is-uppercase' + (isActive ? 'is-active' : '') }>
                             Todos
                         </NavLink>
@@ -94,8 +94,8 @@ export default class App extends Component {
                         </a>
                     </div>
                     <div className={this.state.showMenu ? 'navbar-menu is-active' : 'navbar-menu'} onClick={this.show}>
-                        <div className="navbar-start">
-                            <NavLink to="/add" className={ ({isActive}) => 'navbar-item' + (isActive ? 'is-active' : '') }>
+                        <div className="navbar-start is-flex is-justify-content-center is-align-content-center">
+                            <NavLink to="/add" className={ ({isActive}) => 'navbar-item block' + (isActive ? 'is-active has-background-primary' : '') }>
                                 Создать дело
                             </NavLink>
                         </div>
