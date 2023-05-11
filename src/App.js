@@ -1,6 +1,8 @@
 import React, {Component} from "react";
 import TodoList from "./TodoList";
 import TodoAdd from "./TodoAdd";
+// React Router
+import { Route, NavLink, HashRouter, Routes} from "react-router-dom";
 
 const date1 = new Date(2023, 5, 9, 23, 47);
 const date2 = new Date(2023, 5, 10, 0, 47);
@@ -58,21 +60,31 @@ export default class App extends Component {
         this.setState((state)=>({}));
     }
 
+    // isActive - хранит в себе true||false в зависимости, активна ли сейчас ссылка
     render() {
         return(
-            <>
+            <HashRouter>
                 <nav className="navbar is-light">
                     <div className="navbar-brand">
-                        <span className="navbar-item is-uppercase">
+                        <NavLink to="/" className={ ({isActive}) => 'navbar-item is-uppercase' + (isActive ? 'is-active' : '') }>
                             Todos
-                        </span>
+                        </NavLink>
+                    </div>
+                    <div className="navbar-menu">
+                        <div className="navbar-start">
+                            <NavLink to="/add" className={ ({isActive}) => 'navbar-item' + (isActive ? 'is-active' : '') }>
+                                Создать дело
+                            </NavLink>
+                        </div>
                     </div>
                 </nav>
                 <main className="content px-6 mt-6">
-                    <TodoList list={this.state.data} setDone={this.setDone} delete={this.delete}/>
-                    <TodoAdd add={this.add}/>
+                    <Routes>
+                        <Route path="/" element={<TodoList list={this.state.data} setDone={this.setDone} delete={this.delete} />} />
+                        <Route path="/add" element={<TodoAdd add={this.add} />} />
+                    </Routes>
                 </main>
-            </>
+            </HashRouter>
         )
     }
 }
