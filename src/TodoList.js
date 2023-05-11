@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom"
+
 export default function TodoList(props){
     return (
             <section>
@@ -7,12 +9,10 @@ export default function TodoList(props){
                         {props.list.map( item => (
                             <tr key={item.key}>
                                 <td>
-                                    <span title={item.desc}>
+                                    <Link to={`/${item.key}`}>
                                         {item.done && <del>{item.title}</del>}
-                                    </span>
-                                    <span title={item.desc}>
                                         {!item.done && item.title}
-                                    </span>
+                                    </Link>
                                 </td>
                                 <td>
                                     <button className="button is-success" 

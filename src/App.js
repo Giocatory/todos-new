@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import TodoList from "./TodoList";
 import TodoAdd from "./TodoAdd";
+import TodoDetail from "./TodoDetail";
 // React Router
 import { Route, NavLink, HashRouter, Routes} from "react-router-dom";
 
@@ -40,6 +41,8 @@ export default class App extends Component {
         this.add = this.add.bind(this);
 
         this.showMenu = this.showMenu.bind(this);
+
+        this.getDeed = this.getDeed.bind(this);
     }
 
     // Показать меню гамбургер
@@ -69,6 +72,12 @@ export default class App extends Component {
         this.setState((state)=>({}));
     }
 
+    // Идентификатор дела
+    getDeed(key) {
+        key = +key;
+        return this.state.data.find(item => item.key === key);
+    }
+
     // isActive - хранит в себе true||false в зависимости, активна ли сейчас ссылка
     render() {
         return(
@@ -96,6 +105,7 @@ export default class App extends Component {
                     <Routes>
                         <Route path="/" element={<TodoList list={this.state.data} setDone={this.setDone} delete={this.delete} />} />
                         <Route path="/add" element={<TodoAdd add={this.add} />} />
+                        <Route path="/:key" element={<TodoDetail getDeed={this.getDeed}/>} />
                     </Routes>
                 </main>
             </HashRouter>
