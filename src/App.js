@@ -8,6 +8,9 @@ import { Route, NavLink, HashRouter, Routes} from "react-router-dom";
 import { getAuth, onAuthStateChanged} from "firebase/auth";
 import Register from "./Register";
 import firebaseApp from "./firebase";
+// авторизация и выход
+import Logout from './Logout';
+import Login from './Login';
 
 const date1 = new Date(2023, 5, 9, 23, 47);
 const date2 = new Date(2023, 5, 10, 0, 47);
@@ -111,10 +114,18 @@ export default class App extends Component {
                     </div>
                     <div className={this.state.showMenu ? 'navbar-menu is-active' : 'navbar-menu'} onClick={this.show}>
                         <div className="navbar-start is-flex is-justify-content-center is-align-content-center">
-                            {this.state.currentUser && 
-                                <NavLink to="/add" className={ ({isActive}) => 'navbar-item block' + (isActive ? 'is-active has-background-primary' : '') }>
-                                    Создать дело
-                                </NavLink>
+                            {   
+                                this.state.currentUser && 
+                                    <NavLink to="/add" className={ ({isActive}) => 'navbar-item block' + (isActive ? 'is-active has-background-primary' : '') }>
+                                        Создать дело
+                                    </NavLink>
+                            }
+                            {
+                                !this.state.currentUser && (
+                                    <NavLink to="/login" className={ ({isActive}) => 'navbar-item block' + (isActive ? 'is-active has-background-primary' : '') }>
+                                        Войти
+                                    </NavLink>
+                                )
                             }
                             {
                                 !this.state.currentUser && 
@@ -123,6 +134,16 @@ export default class App extends Component {
                                 </NavLink>
                             }
                         </div>
+
+                        {
+                            this.state.currentUser && (
+                                <div className="navbar-end">
+                                    <NavLink to="/logout" className={ ({isActive}) => 'navbar-item block' + (isActive? 'is-active has-background-primary' : '') }>
+                                        Выйти
+                                    </NavLink>
+                                </div>
+                            )
+                        }
                     </div>
                 </nav>
                 <main className="content px-6 mt-6">
@@ -131,6 +152,8 @@ export default class App extends Component {
                         <Route path="/add" element={<TodoAdd add={this.add} />} />
                         <Route path="/:key" element={<TodoDetail getDeed={this.getDeed}/>} />
                         <Route path="/register" element={<Register currentUser={this.state.currentUser} />} />
+                        <Route path="/logout" element={<Logout currentUser={this.state.currentUser} />}/>
+                        <Route path="/login" element={<Login currentUser={this.state.currentUser} />}/>
                     </Routes>
                 </main>
             </HashRouter>

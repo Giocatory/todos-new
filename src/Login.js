@@ -43,15 +43,13 @@ export default class Login extends Component {
                 <div className="field">
                   <label className="label">Адрес электронной почты</label>
                   <div className="control">
-                    <input type="email" className="input"
-                           onBlur={this.handleEmailBlur} />
+                    <input type="email" className="input" onChange={this.handleEmailChange} onBlur={this.handleEmailBlur} />
                   </div>
                 </div>
                 <div className="field">
                   <label className="label">Пароль</label>
                   <div className="control">
-                    <input type="password" className="input"
-                           onBlur={this.handlePasswordBlur} />
+                    <input type="password" className="input" onChange={this.handlePasswordChange} onBlur={this.handlePasswordBlur} />
                   </div>
                 </div>
                 <div className="field is-grouped is-grouped-right">
