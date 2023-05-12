@@ -13,9 +13,12 @@ const firebaseConfig = {
   storageBucket: "todos-f8f05.appspot.com",
   messagingSenderId: "884776039092",
   appId: "1:884776039092:web:d1a69fb5e001751db65de1",
-  measurementId: "G-4X3ZD6C0VN"
+  measurementId: "G-4X3ZD6C0VN",
+  databaseURL: "https://todos-f8f05-default-rtdb.europe-west1.firebasedatabase.app/"
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+const firebaseApp = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
+
+export default firebaseApp;
