@@ -4,6 +4,11 @@ export default function TodoDetail(props){
     const { key } = useParams();
     const deed = props.getDeed(key);
 
+    let imgStyle = {
+        width: "20rem",
+        height: "20rem",
+    }
+
     return(
         <section>
             {
@@ -18,7 +23,7 @@ export default function TodoDetail(props){
             }
             {
                 deed.image &&
-                <p><img src={deed.image} alt={deed.title}/></p>
+                <p><img src={deed.image} alt={deed.title} style={imgStyle}/></p>
             }
         </section>
     )
