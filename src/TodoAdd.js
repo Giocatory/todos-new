@@ -64,9 +64,10 @@ export default class TodoAdd extends Component {
     }
     
     render() {
-        if (this.state.redirect) {
-            return <Navigate to="/" />
+        if (!this.props.currentUser) {
+            return <Navigate to="/login" replace/>
         }
+        else if (this.state.redirect) return <Navigate to="/" replace/>
         else return (
                 <section>
                     <h1>Создание нового дела</h1>

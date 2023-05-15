@@ -137,9 +137,9 @@ export default class App extends Component {
                 </nav>
                 <main className="content px-6 mt-6">
                     <Routes>
-                        <Route path="/" element={<TodoList list={this.state.data} setDone={this.setDone} delete={this.delete} />} />
+                        <Route path="/" element={<TodoList list={this.state.data} setDone={this.setDone} delete={this.delete} currentUser={this.currentUser}/>} />
                         <Route path="/add" element={<TodoAdd add={this.add} currentUser={this.state.currentUser}/>} />
-                        <Route path="/:key" element={<TodoDetail getDeed={this.getDeed}/>} />
+                        <Route path="/:key" element={<TodoDetail getDeed={this.getDeed} currentUser={this.currentUser}/>} />
                         <Route path="/register" element={<Register currentUser={this.state.currentUser} />} />
                         <Route path="/logout" element={<Logout currentUser={this.state.currentUser} />}/>
                         <Route path="/login" element={<Login currentUser={this.state.currentUser} />}/>
