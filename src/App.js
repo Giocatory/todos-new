@@ -9,37 +9,17 @@ import { getAuth, onAuthStateChanged} from "firebase/auth";
 import Register from "./Register";
 import firebaseApp from "./firebase";
 // авторизация и выход
+import { getList, setDone, del } from "./api"
 import Logout from './Logout';
 import Login from './Login';
 
-const date1 = new Date(2023, 5, 9, 23, 47);
-const date2 = new Date(2023, 5, 10, 0, 47);
-
-const initialData = [
-    {
-        title: 'Изучить React', // Заголовок дела
-        desc: 'Чем быстрее, тем лучше', // Необязательное примечание к делу
-        image: '', // картинка в виде data URL
-        done: true, // выполнено или нет
-        createdAt: date1.toLocaleDateString(), // автоматически заносимые дата и время создания дела
-        key: date1.getTime() // уникальный идентификатор дела (кол-во милисекунд от 01.01.1970) заносится автоматически
-    },
-    {
-        title: 'Написать первое React приложение',
-        desc: 'Список запланированных дел',
-        image: 'https://sun9-21.userapi.com/impf/c637119/v637119755/bfaa/V77IlwhITx4.jpg?size=320x224&quality=96&sign=1d42e5e7dc6aa28453980cea9d1853ee&c_uniq_tag=lWmwPyaYFWexxDsmz87NOGYH53UArk4m6s6GaonlfRs&type=album',
-        done: false,
-        createdAt: date2.toLocaleDateString(),
-        key: date2.getTime()
-    }
-]
 
 export default class App extends Component {
     constructor(props) {
         super(props);
         
         this.state = {
-            data: initialData,
+            data: [],
             showMenu: false,
             currentUser: undefined
         }
@@ -56,8 +36,16 @@ export default class App extends Component {
     }
 
     // вызывается при изменении статуса пользователя
-    authStateChanged(user) {
+    async authStateChanged(user) {
         this.setState({currentUser: user});
+
+        if (user) {
+            const newData = await getList(user);
+            this.setState({data: newData});
+        }
+        else{
+            this.setState({data: []});
+        }
     }
 
     componentDidMount() {
@@ -71,7 +59,8 @@ export default class App extends Component {
     }
 
     // Пометить как выполненное
-    setDone(key) {
+    async setDone(key) {
+        await setDone(this.state.currentUser, key);
         const deed = this.state.data.find(item => item.key === key);
         if (deed) {
             deed.done = true;
@@ -80,7 +69,8 @@ export default class App extends Component {
     }
 
     // Удалить как выполненное
-    delete(key) {
+    async delete(key) {
+        await del(this.state.currentUser, key);
         const newData = this.state.data.filter( current => current.key!== key );
         this.setState(state => ({data: newData}));
     }
@@ -93,7 +83,6 @@ export default class App extends Component {
 
     // Идентификатор дела
     getDeed(key) {
-        key = +key;
         return this.state.data.find(item => item.key === key);
     }
 
