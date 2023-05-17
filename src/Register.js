@@ -10,6 +10,47 @@ export default class Register extends Component {
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
         this.handleFormSubmit = this.handleFormSubmit.bind(this);
         this.clearFormData();
+        // validation
+        this.handlePasswordConfirmChange = this.handlePasswordConfirmChange.bind(this);
+
+        this.state = {
+            errorEmail: '',
+            errorPassword: '',
+            errorPasswordConfirm: '',
+        }   
+    }
+
+    // validation
+    resetErrorMessages(){
+        this.setState( (state) => ({
+            errorEmail: '',
+            errorPassword: '',
+            errorPasswordConfirm: '',
+        }))
+    }
+
+    validate(){
+        this.resetErrorMessages();
+        if(!this.formData.email){
+            this.setState({ errorEmail: 'Адрес эелектронной почты указан не верно!'});
+            return false;
+        }
+        if(!this.formData.password){
+            this.setState({ errorPassword: 'Пароль указан не верно!'});
+            return false;
+        }
+        if(!this.formData.passwordConfirm){
+            this.setState({ errorPasswordConfirm: 'Подтверждение пароля'});
+            return false;
+        }
+        if(this.formData.password!== this.formData.passwordConfirm){
+            this.setState({ 
+                errorPassword: 'Пароли не совпадают',
+                errorPasswordConfirm: 'Пароли не совпадают'
+            });
+            return false;
+        }
+        return true;
     }
 
     clearFormData(){
@@ -33,6 +74,10 @@ export default class Register extends Component {
         if(typeof result !== 'object') console.log(result);
     }
 
+    handlePasswordConfirmChange(e){
+        this.formData.passwordConfirm = e.target.value;
+    }
+
     render() {
         if(this.props.currentUser){
             return <Navigate to="/" replace/>;
@@ -46,12 +91,30 @@ export default class Register extends Component {
                             <div className='control'>
                                 <input type='email' className='input' onChange={this.handleEmailChange}></input>
                             </div>
+                            {
+                                this.state.errorEmail &&
+                                <p className='help is-danger'>{this.state.errorEmail}</p>
+                            }
                         </div>
                         <div className='field'>
                             <label className='label'>Пароль</label>
                             <div className='control'>
                                 <input type='password' className='input' onChange={this.handlePasswordChange}></input>
                             </div>
+                            {
+                                this.state.errorPassword &&
+                                <p className='help is-danger'>{this.state.errorPassword}</p>
+                            }
+                        </div>
+                        <div className='field'>
+                            <label className='label'>Повторите пароль</label>
+                            <div className='control'>
+                                <input type='password' className='input' onChange={this.handlePasswordConfirmChange}></input>
+                            </div>
+                            {
+                                this.state.errorPasswordConfirm &&
+                                <p className='help is-danger'>{this.state.errorPasswordConfirm}</p>
+                            }
                         </div>
                         <div className='field is-grouped is-is-grouped-right'>
                             <div className='control'>
