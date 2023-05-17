@@ -53,6 +53,19 @@ export default class Register extends Component {
         return true;
     }
 
+    showErrorMessage(code){
+        this.resetErrorMessages();
+        if( code === 'auth/email-already-in-use'){
+            this.setState({ errorEmail: 'Адрес электронной почты уже существует'});
+        }
+        else if( code === 'auth/weak-password'){
+            this.setState({ 
+                errorPassword: 'Пароль должен быть сложнее!',
+                errorPasswordConfirm: 'Пароль должен быть сложнее!'
+            });
+        }
+    }
+
     clearFormData(){
         this.formData = {
             email: '',
@@ -68,11 +81,13 @@ export default class Register extends Component {
         this.formData.password = e.target.value;
     }
 
-    async handleFormSubmit(e){
-        e.preventDefault();
-        const result = await register(this.formData.email, this.formData.password);
-        if(typeof result !== 'object') console.log(result);
-    }
+    async handleFormSubmit(evt) {
+        evt.preventDefault();
+        if (this.validate()) {
+          const result = await register(this.formData.email, this.formData.password);
+          if (typeof result !== 'object') this.showErrorMessage(result);
+        }
+      }
 
     handlePasswordConfirmChange(e){
         this.formData.passwordConfirm = e.target.value;
